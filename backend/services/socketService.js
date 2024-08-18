@@ -25,6 +25,18 @@ exports.authenticateSocket = (socket, next) => {
 
 exports.handleConnection = async (socket, io) => {
   activeUsers.set(socket.user.email, socket.id);
+  socket.on('image',async ({buffer,fileName,to})=>{
+    const toSocketId = activeUsers.get(to);
+    console.log("Reached socket")
+    if(toSocketId){
+      io.to(toSocketId).emit('receive-image',{buffer,fileName,from:socket.user.email});
+    } 
+    else{
+      
+    }
+  })
+
+
   socket.on('private message', async ({ to, message }) => {
     const toSocketId = activeUsers.get(to);
     if (toSocketId) {

@@ -18,6 +18,8 @@ const {
 const addReqeust=async (req,res)=>{
     const email = req.user.email;
     const to=req.body.to;
+    console.log("---to----")
+    console.log(to)
     try{
         let result=await friendService.addRequest(email,to);
         console.log(result)
