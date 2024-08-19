@@ -7,7 +7,7 @@ const viewRequests = async (email) => {
     if (!user) {
       throw new Error('User not found');
     }
-    let userRequests= await FriendRequest.find({ to: user._id });
+    let userRequests= await FriendRequest.find({ to: user._id,status:"pending" });
     const finalRequests = await Promise.all(
         userRequests.map(async (request) => {
           const userReq = await User.findOne({ _id: request.from });
@@ -48,6 +48,7 @@ const addRequest = async (from, to) => {
 
     await newFriendReq.save();
     return "Friend request sent successfully!";
+
   } catch (e) {
     console.error(e);
     throw new Error('There was an error in sending the friend request: ' + e.message);

@@ -23,7 +23,7 @@ const addReqeust=async (req,res)=>{
     try{
         let result=await friendService.addRequest(email,to);
         console.log(result)
-        return new SuccessMsgResponse("Friend request sent!");
+        res.send("Friend request sent successfully!")
     }
     catch(e){
         new InternalErrorResponse('Something went wrong in the server').send(res);
@@ -48,7 +48,8 @@ const acceptRequest=async (req,res)=>{
     try{
         let result=await friendService.acceptRequest(email,from);
         console.log(result);
-        return new SuccessMsgResponse("Friend request Accepted!");
+        // return new SuccessMsgResponse("Friend request Accepted!");
+        res.status(200).json({msg:"Friend request Accepted!"});
         }
         catch(e){
             res.status(500).json({msg:e});
